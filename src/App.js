@@ -30,7 +30,10 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <header>
+        <h1>⚛️🔥💬</h1>
+        <SignOut />
+      </header>
 
       <section>{user ? <Chatroom /> : <Signin />}</section>
     </div>
@@ -43,11 +46,21 @@ function Signin() {
     auth.signInWithPopup(provider);
   };
 
-  return <button onClick={signInWithGoogle}>Signin with Google</button>;
+  return (
+    <button className="sign-in" onClick={signInWithGoogle}>
+      Signin with Google
+    </button>
+  );
 }
 
 function SignOut() {
-  return auth.currentUser && <button onClick={() => auth.SignOut}>Sign Out</button>;
+  return (
+    auth.currentUser && (
+      <button className="sign-out" onClick={() => auth.signOut}>
+        Sign Out
+      </button>
+    )
+  );
 }
 
 function Chatroom() {
@@ -97,10 +110,12 @@ function ChatMessage(props) {
   const { text, uid, photoURL } = props.message;
   const messageClass = uid === auth.currentUser.uid ? "sent" : "received";
   return (
-    <div className={"message ${messageClass}"}>
-      <img src={photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"} />
-      <p>{text}</p>
-    </div>
+    <>
+      <div className={"message ${messageClass}"}>
+        <img src={photoURL || "https://api.adorable.io/avatars/23/abott@adorable.png"} />
+        <p>{text}</p>
+      </div>
+    </>
   );
 }
 
